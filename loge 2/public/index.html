@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Loge · Seu camarote particular</title>
+  <meta name="theme-color" content="#0e0f13">
+  <link rel="icon" href="/logo.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <main id="entrada">
+    <form class="cartao" id="criar-form" novalidate>
+      <img src="/logo.svg" alt="" width="120" height="120">
+      <h1 class="marca">Loge</h1>
+      <span class="filete"></span>
+      <p class="tag">Seu camarote particular.</p>
+      <input id="nome" name="nome" placeholder="Seu nome" maxlength="24" autocomplete="nickname" required>
+      <input id="senha-sala" name="senha" type="password" placeholder="Senha da sala (opcional)" maxlength="128" autocomplete="off">
+      <button type="submit" class="btn primario grande">Criar sala</button>
+      <p class="sub">Depois é só mandar o link para os amigos.</p>
+    </form>
+  </main>
+  <script>
+    const form = document.getElementById("criar-form");
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const nome = (document.getElementById("nome").value || "").trim() || "anônimo";
+      localStorage.setItem("nome", nome);
+      const id = (crypto.randomUUID?.() || String(Math.random()).slice(2)).slice(0, 8);
+      const senha = document.getElementById("senha-sala").value;
+      if (senha) sessionStorage.setItem("senha:" + id, senha);
+      location.href = "/sala/" + id;
+    });
+  </script>
+</body>
+</html>
